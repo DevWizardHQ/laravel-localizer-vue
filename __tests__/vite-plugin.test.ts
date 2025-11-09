@@ -1,30 +1,29 @@
 import { describe, it, expect } from 'vitest';
-import { laravelLocalizer } from '../vite-plugin';
+import { laravelLocalizer } from '../src/vite-plugin-laravel-localizer';
 
 describe('laravelLocalizer Vite Plugin', () => {
   it('should return a valid Vite plugin', () => {
     const plugin = laravelLocalizer();
 
-    expect(plugin).toHaveProperty('name', 'vite-plugin-laravel-localizer');
+    expect(plugin).toHaveProperty('name', '@devwizard/vite-plugin-laravel-localizer');
     expect(plugin).toHaveProperty('buildStart');
-    expect(plugin).toHaveProperty('configureServer');
+    expect(plugin).toHaveProperty('handleHotUpdate');
   });
 
   it('should accept custom options', () => {
     const plugin = laravelLocalizer({
       command: 'php artisan custom:command',
-      watch: ['custom/**'],
+      patterns: ['custom/**'],
       debug: true,
-      debounce: 500,
     });
 
-    expect(plugin.name).toBe('vite-plugin-laravel-localizer');
+    expect(plugin.name).toBe('@devwizard/vite-plugin-laravel-localizer');
   });
 
   it('should use default options when not provided', () => {
     const plugin = laravelLocalizer();
 
-    expect(plugin.name).toBe('vite-plugin-laravel-localizer');
+    expect(plugin.name).toBe('@devwizard/vite-plugin-laravel-localizer');
   });
 
   describe('buildStart hook', () => {
@@ -35,11 +34,11 @@ describe('laravelLocalizer Vite Plugin', () => {
     });
   });
 
-  describe('configureServer hook', () => {
+  describe('handleHotUpdate hook', () => {
     it('should be defined', () => {
       const plugin = laravelLocalizer();
 
-      expect(typeof plugin.configureServer).toBe('function');
+      expect(typeof plugin.handleHotUpdate).toBe('function');
     });
   });
 
@@ -47,7 +46,7 @@ describe('laravelLocalizer Vite Plugin', () => {
     it('should accept empty options object', () => {
       const plugin = laravelLocalizer({});
 
-      expect(plugin.name).toBe('vite-plugin-laravel-localizer');
+      expect(plugin.name).toBe('@devwizard/vite-plugin-laravel-localizer');
     });
 
     it('should merge custom options with defaults', () => {
@@ -55,7 +54,7 @@ describe('laravelLocalizer Vite Plugin', () => {
         debug: true,
       });
 
-      expect(plugin.name).toBe('vite-plugin-laravel-localizer');
+      expect(plugin.name).toBe('@devwizard/vite-plugin-laravel-localizer');
     });
   });
 

@@ -2,6 +2,47 @@
 
 All notable changes to `@devwizard/laravel-localizer-vue` will be documented in this file.
 
+## v0.0.7 - 2025-11-09
+
+### 🔄 Major Update - Alignment with React Version
+
+- **Breaking Change**: Renamed `useTranslation` to `useLocalizer` for consistency with React version
+  - No backward compatibility - all imports must be updated
+  - Function signature and API remain the same
+
+- **File Structure**: Reorganized to match React package structure
+  - Created `src/` directory for all source files
+  - Moved `composables/useTranslation.ts` to `src/useLocalizer.ts`
+  - Renamed `vite-plugin.ts` to `src/vite-plugin-laravel-localizer.ts`
+
+- **Translation Loading**: Updated to use `window.localizer` object (consistent with React version)
+  - Changed from `window.__LARAVEL_LOCALIZER_TRANSLATIONS__` to `window.localizer.translations`
+  - Better integration with bootstrap.ts initialization
+  - Synchronous translation loading for improved performance
+
+- **Vite Plugin Improvements**: Updated to match React implementation
+  - Simplified plugin structure using `minimatch` for pattern matching
+  - Better error handling and logging
+  - Non-blocking command execution
+  - Changed from `watch` option to `patterns` option for consistency
+  - Removed debounce functionality for faster regeneration
+  - Uses `handleHotUpdate` hook instead of `configureServer`
+
+- **Dependencies**: Added `minimatch` for glob pattern matching
+
+- **Documentation**: Updated README to match React version structure
+  - Added bootstrap.ts initialization section
+  - Updated Vite plugin options documentation
+  - Improved setup instructions
+  - All examples now use `useLocalizer`
+
+### 🐛 Bug Fixes
+
+- Fixed translation initialization warnings
+- Improved error messages for missing translations
+
+---
+
 ## v0.0.1 - 2025-11-09
 
 ### 🎉 Initial Beta Release

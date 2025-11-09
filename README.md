@@ -1,12 +1,13 @@
 # @devwizard/laravel-localizer-vue
 
-🌍 Vue 3 integration for Laravel Localizer with Vite plugin, `useTranslation` composable, and automatic TypeScript generation.
+🌍 Vue 3 integration for Laravel Localizer with Vite plugin, `useLocalizer` composable, and automatic TypeScript generation.
 
 ## Features
 
 - ✅ **Automatic Generation**: Vite plugin watches for language file changes and regenerates TypeScript files
 - ✅ **Type-Safe**: Full TypeScript support with auto-generated types
-- ✅ **Vue 3 Composition API**: Intuitive `useTranslation` composable for Vue components
+- ✅ **Vue 3 Composition API**: Intuitive `useLocalizer` composable for Vue components
+- ✅ **Customizable Path**: By default reads from `@/lang` folder, customizable via options
 - ✅ **Laravel-Compatible**: Matches Laravel's translation API (`__`, `trans`, `choice`)
 - ✅ **Inertia.js Integration**: Seamlessly works with Inertia.js page props
 - ✅ **RTL Support**: Built-in right-to-left language support
@@ -26,12 +27,42 @@ yarn add @devwizard/laravel-localizer-vue
 
 ```bash
 composer require devwizardhq/laravel-localizer
-php artisan localizer:install --framework=vue
+php artisan localizer:install
 ```
+
+The install command will:
+- ✅ Publish configuration files
+- ✅ Create default locale files
+- ✅ Install npm package (optional)
+- ✅ Generate initial TypeScript files
+
+**Note:** You'll need to manually add the bootstrap setup (see step 1 below).
 
 ## Setup
 
-### 1. Add Vite Plugin
+### 1. Initialize Translations in Bootstrap
+
+Add this to your `resources/js/bootstrap.ts`:
+
+```typescript
+import { translations } from '@/lang';
+
+declare global {
+  interface Window {
+    localizer?: {
+      translations: Record<string, Record<string, string>>;
+    };
+  }
+}
+
+window.localizer = {
+  translations,
+};
+```
+
+This makes translations available globally and synchronously.
+
+### 2. Add Vite Plugin
 
 Update your `vite.config.ts`:
 
@@ -47,10 +78,15 @@ export default defineConfig({
       debug: true, // Enable debug logging (optional)
     }),
   ],
+  resolve: {
+    alias: {
+      '@': '/resources/js',
+    },
+  },
 });
 ```
 
-### 2. Generate Translation Files
+### 3. Generate Translation Files
 
 ```bash
 php artisan localizer:generate --all
@@ -64,9 +100,9 @@ This creates TypeScript files in `resources/js/lang/` directory.
 
 ```vue
 <script setup lang="ts">
-import { useTranslation } from '@devwizard/laravel-localizer-vue';
+import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
-const { __ } = useTranslation();
+const { __ } = useLocalizer();
 </script>
 
 <template>
@@ -81,9 +117,9 @@ const { __ } = useTranslation();
 
 ```vue
 <script setup lang="ts">
-import { useTranslation } from '@devwizard/laravel-localizer-vue';
+import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
-const { __ } = useTranslation();
+const { __ } = useLocalizer();
 const userName = 'John';
 </script>
 
@@ -99,9 +135,9 @@ const userName = 'John';
 
 ```vue
 <script setup lang="ts">
-import { useTranslation } from '@devwizard/laravel-localizer-vue';
+import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
-const { choice } = useTranslation();
+const { choice } = useLocalizer();
 const itemCount = ref(5);
 </script>
 
@@ -114,9 +150,9 @@ const itemCount = ref(5);
 
 ```vue
 <script setup lang="ts">
-import { useTranslation } from '@devwizard/laravel-localizer-vue';
+import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
-const { dir, locale } = useTranslation();
+const { dir, locale } = useLocalizer();
 </script>
 
 <template>
@@ -130,9 +166,9 @@ const { dir, locale } = useTranslation();
 
 ```vue
 <script setup lang="ts">
-import { useTranslation } from '@devwizard/laravel-localizer-vue';
+import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
-const { __, has } = useTranslation();
+const { __, has } = useLocalizer();
 </script>
 
 <template>
@@ -146,9 +182,9 @@ const { __, has } = useTranslation();
 
 ```vue
 <script setup lang="ts">
-import { useTranslation } from '@devwizard/laravel-localizer-vue';
+import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
-const { translations, locale } = useTranslation();
+const { translations, locale } = useLocalizer();
 
 // translations and locale are reactive ComputedRefs
 // They automatically update when the locale changes
@@ -164,7 +200,7 @@ const { translations, locale } = useTranslation();
 
 ## API Reference
 
-### `useTranslation()`
+### `useLocalizer()`
 
 Returns an object with the following properties and methods:
 
@@ -185,17 +221,14 @@ Returns an object with the following properties and methods:
 
 ```typescript
 laravelLocalizer({
+  // Watch patterns for language file changes (relative to project root)
+  patterns: ['lang/**', 'resources/lang/**'],
+
   // Command to run when lang files change
   command: 'php artisan localizer:generate --all',
 
-  // Watch paths for changes
-  watch: ['lang/**', 'resources/lang/**'],
-
   // Enable debug logging
   debug: false,
-
-  // Debounce delay in milliseconds
-  debounce: 300,
 });
 ```
 

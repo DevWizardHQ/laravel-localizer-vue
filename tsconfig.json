@@ -38,5 +38,5 @@
     "skipLibCheck": true
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "dist", "__tests__", "**/*.test.ts"]
+  "exclude": ["node_modules", "dist", "__tests__", "**/*.test.ts", "composables"]
 }

@@ -7,9 +7,9 @@
  * @example
  * ```vue
  * <script setup lang="ts">
- * import { useTranslation } from '@devwizard/laravel-localizer-vue';
+ * import { useLocalizer } from '@devwizard/laravel-localizer-vue';
  *
- * const { __, trans, locale, dir } = useTranslation();
+ * const { __, trans, locale, dir } = useLocalizer();
  * </script>
  *
  * <template>
@@ -55,7 +55,7 @@ export interface PageProps extends Record<string, unknown> {
 /**
  * Translation composable return type
  */
-export interface UseTranslationReturn {
+export interface UseLocalizerReturn {
   /**
    * Main translation function
    */
@@ -140,9 +140,9 @@ function replacePlaceholders(text: string, replacements?: Replacements): string 
  * @example
  * ```vue
  * <script setup lang="ts">
- * import { useTranslation } from '@devwizard/laravel-localizer-vue';
+ * import { useLocalizer } from '@devwizard/laravel-localizer-vue';
  *
- * const { __, trans, lang, locale, dir } = useTranslation();
+ * const { __, trans, lang, locale, dir } = useLocalizer();
  * </script>
  *
  * <template>
@@ -154,7 +154,7 @@ function replacePlaceholders(text: string, replacements?: Replacements): string 
  * </template>
  * ```
  */
-export function useTranslation(): UseTranslationReturn {
+export function useLocalizer(): UseLocalizerReturn {
   const page = usePage<PageProps>();
 
   const locale = computed(() => page.props.locale?.current || 'en');
