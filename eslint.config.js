@@ -1,21 +1,13 @@
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import vuePlugin from 'eslint-plugin-vue';
-import vueParser from 'vue-eslint-parser';
 
 export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...vuePlugin.configs['flat/recommended'],
   {
-    files: ['**/*.ts', '**/*.vue'],
-    languageOptions: {
-      parser: vueParser,
-      parserOptions: {
-        parser: tseslint.parser,
-        extraFileExtensions: ['.vue'],
-      },
-    },
+    files: ['**/*.ts', '**/*.tsx', '**/*.vue'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': [
@@ -29,7 +21,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['**/__tests__/**'],
+    files: ['**/__tests__/**', '**/*.test.ts', '**/*.spec.ts'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
     },

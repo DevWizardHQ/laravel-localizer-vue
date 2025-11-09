@@ -94,7 +94,9 @@ export interface UseTranslationReturn {
   /**
    * Available locales with metadata (reactive)
    */
-  availableLocales: ComputedRef<Record<string, { label: string; flag: string; dir: 'ltr' | 'rtl' }>>;
+  availableLocales: ComputedRef<
+    Record<string, { label: string; flag: string; dir: 'ltr' | 'rtl' }>
+  >;
 
   /**
    * All translations for current locale (reactive)
@@ -157,9 +159,7 @@ export function useTranslation(): UseTranslationReturn {
 
   const locale = computed(() => page.props.locale?.current || 'en');
   const dir = computed(() => page.props.locale?.dir || 'ltr');
-  const availableLocales = computed(
-    () => page.props.locale?.available || {}
-  );
+  const availableLocales = computed(() => page.props.locale?.available || {});
 
   // Dynamically import translations from generated files
   // Note: Users need to set up path alias '@/lang' -> 'resources/js/lang'
@@ -171,7 +171,9 @@ export function useTranslation(): UseTranslationReturn {
       interface WindowWithTranslations extends Window {
         __LARAVEL_LOCALIZER_TRANSLATIONS__?: Record<string, Record<string, string>>;
       }
-      return (window as WindowWithTranslations).__LARAVEL_LOCALIZER_TRANSLATIONS__?.[locale.value] || {};
+      return (
+        (window as WindowWithTranslations).__LARAVEL_LOCALIZER_TRANSLATIONS__?.[locale.value] || {}
+      );
     } catch {
       console.warn(`[Laravel Localizer] Could not load translations for locale: ${locale.value}`);
       return {};
