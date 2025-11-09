@@ -1,6 +1,6 @@
 {
   "name": "@devwizard/laravel-localizer-vue",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "type": "module",
   "description": "Vue 3 integration for Laravel Localizer with Vite plugin, useLocalizer composable, and automatic TypeScript generation",
   "main": "dist/index.js",

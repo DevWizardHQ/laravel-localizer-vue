@@ -2,101 +2,151 @@
 
 All notable changes to `@devwizard/laravel-localizer-vue` will be documented in this file.
 
-## v0.0.7 - 2025-11-09
+## v1.0.0 - 2025-11-09
 
-### 🔄 Major Update - Alignment with React Version
+### 🎉 Initial Stable Release
 
-- **Breaking Change**: Renamed `useTranslation` to `useLocalizer` for consistency with React version
-  - No backward compatibility - all imports must be updated
-  - Function signature and API remain the same
+This is the first stable release of Laravel Localizer Vue, providing seamless integration between Laravel translations and Vue 3 applications.
 
-- **File Structure**: Reorganized to match React package structure
-  - Created `src/` directory for all source files
-  - Moved `composables/useTranslation.ts` to `src/useLocalizer.ts`
-  - Renamed `vite-plugin.ts` to `src/vite-plugin-laravel-localizer.ts`
+### ✨ Features
 
-- **Translation Loading**: Updated to use `window.localizer` object (consistent with React version)
-  - Changed from `window.__LARAVEL_LOCALIZER_TRANSLATIONS__` to `window.localizer.translations`
-  - Better integration with bootstrap.ts initialization
-  - Synchronous translation loading for improved performance
+#### useLocalizer Composable
 
-- **Vite Plugin Improvements**: Updated to match React implementation
-  - Simplified plugin structure using `minimatch` for pattern matching
-  - Better error handling and logging
-  - Non-blocking command execution
-  - Changed from `watch` option to `patterns` option for consistency
-  - Removed debounce functionality for faster regeneration
-  - Uses `handleHotUpdate` hook instead of `configureServer`
+A powerful Vue 3 composable for accessing Laravel translations with full TypeScript support and reactivity:
 
-- **Dependencies**: Added `minimatch` for glob pattern matching
-
-- **Documentation**: Updated README to match React version structure
-  - Added bootstrap.ts initialization section
-  - Updated Vite plugin options documentation
-  - Improved setup instructions
-  - All examples now use `useLocalizer`
-
-### 🐛 Bug Fixes
-
-- Fixed translation initialization warnings
-- Improved error messages for missing translations
-
----
-
-## v0.0.1 - 2025-11-09
-
-### 🎉 Initial Beta Release
-
-- **useTranslation Composable**: Vue 3 Composition API for accessing Laravel translations
-  - `__()` - Main translation function with replacements and fallback
-  - `trans()` - Alias for `__()`
-  - `lang()` - Alias for `__()`
+- **Translation Functions**
+  - `__()` - Main translation function with placeholder replacement and fallback support
+  - `trans()` - Alias for `__()` (Laravel compatibility)
+  - `lang()` - Alias for `__()` (Laravel compatibility)
   - `has()` - Check if translation key exists
-  - `choice()` - Pluralization support
-  - `locale` - Reactive current locale code (ComputedRef)
-  - `dir` - Reactive text direction (ComputedRef)
-  - `availableLocales` - Reactive available locales with metadata (ComputedRef)
-  - `translations` - Reactive all translations for current locale (ComputedRef)
+  - `choice()` - Pluralization support with replacement variables
 
-- **Vite Plugin**: Automatic TypeScript generation
-  - Watches `lang/**` directory for changes
-  - Debounced regeneration (300ms)
-  - Runs `php artisan localizer:generate --all` automatically
-  - Zero configuration required
+- **Reactive Locale Information**
+  - `locale` - ComputedRef for current locale code (e.g., 'en', 'fr')
+  - `dir` - ComputedRef for text direction ('ltr' or 'rtl')
+  - `availableLocales` - ComputedRef for available locales with metadata
+  - `translations` - ComputedRef for all translations for current locale
 
-- **TypeScript Support**: Full type safety
-  - Comprehensive interfaces for all types
-  - IntelliSense support in IDEs
-  - Strict mode compatible
+#### Placeholder Replacement
 
-- **Inertia.js Integration**: Seamless integration with Inertia.js
-  - Works with both Inertia v1 and v2
-  - Supports Vue 3.0+
-  - Automatic page props detection
+- Supports both `:placeholder` and `{placeholder}` formats
+- Multiple placeholders in single string
+- Numeric and string replacements
+- Nested placeholder support
 
-### 📚 Documentation
+#### Pluralization
 
-- Comprehensive README with usage examples
-- API documentation with TypeScript interfaces
-- Migration guide from v1 to v2
+- Laravel-compatible pluralization format
+- Support for zero, one, and many forms
+- Placeholder replacement in pluralized strings
+- Custom count-based rules
+
+#### Vite Plugin
+
+Automatic TypeScript generation with hot module replacement:
+
+- Watches language files for changes
+- Non-blocking command execution
+- Configurable watch patterns
+- Debug logging option
+- Integrates with Laravel Artisan commands
+
+#### Inertia.js Integration
+
+Seamless integration with Inertia.js:
+
+- Automatic locale detection from page props
+- Reactive locale updates
+- Shared locale data
+- RTL support via page props
+
+### ⚛️ Vue 3 Composition API
+
+- Fully reactive with Vue computed refs
+- Works with `<script setup>` syntax
+- Composable pattern for reusability
+- Automatic reactivity tracking
+- No manual watchers needed
+
+### 🎯 TypeScript Support
+
+- Full type definitions
+- IntelliSense support in IDEs
+- Type-safe placeholder replacements
+- Strict mode compatible
+- Exported types for custom implementations
+- ComputedRef types for reactive values
 
 ### 🧪 Testing
 
-- Vitest configuration
-- Comprehensive test suite with 100% coverage
-- Vue Test Utils for component testing
-- ESM module support
-
-### 🛠️ Development Tools
-
-- ESLint configuration with TypeScript and Vue rules
-- Prettier for code formatting
-- tsup for building and bundling
-- GitHub Actions for CI/CD
+- Comprehensive test suite with Vitest
+- Vue Test Utils integration
+- 100% code coverage
+- Mock Inertia.js integration
+- Example test patterns
 
 ### 📦 Package Configuration
 
-- ESM-only distribution
+- ESM-only distribution (modern bundlers)
 - Tree-shakeable exports
+- Separate entry points for composable and Vite plugin
+- Proper peer dependencies
+- Side-effect free
+
+### 🔧 Build System
+
+- Built with tsup for optimal bundling
+- Source maps for debugging
+- Minified production builds
+- Declaration files included
+
+### 📚 Documentation
+
+- Complete README with examples
+- API reference
+- Setup guide
+- Integration examples
+- TypeScript usage patterns
+- Composition API examples
+
+### 🔗 Dependencies
+
+- Vue 3.0+ (peer dependency)
+- Inertia.js v1 or v2 (peer dependency)
+- Vite 5+ (peer dependency for plugin)
+- `minimatch` for pattern matching in Vite plugin
+
+### ⚡ Performance
+
+- Computed refs for optimal reactivity
+- Cached locale data
+- Optimized re-renders
+- Lazy evaluation
+
+### 🎨 Developer Experience
+
+- Hot module replacement in development
+- Automatic regeneration on file changes
+- Clear error messages
+- Debug mode for troubleshooting
+- Vue DevTools integration
+
+### 📝 Requirements
+
+- Node.js 16+
+- Vue 3.0+
+- Inertia.js v1 or v2
+- Laravel Localizer backend package
+
+### 🔄 Migration from Beta
+
+This release consolidates all beta features into a stable API. Key changes from beta versions:
+
+- Renamed `useTranslation` to `useLocalizer` for consistency
+- Uses `window.localizer.translations` for global translation access
+- Improved Vite plugin with better pattern matching
+- Enhanced TypeScript definitions
+- All reactive values are now ComputedRef types
+
 - Proper package.json exports field
 - Peer dependencies: Vue 3+, Inertia v1/v2, Vite 5+
