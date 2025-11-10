@@ -82,10 +82,10 @@ export default defineConfig({
     laravelLocalizer({
       // Watch patterns for language file changes
       patterns: ['lang/**', 'resources/lang/**'],
-      
+
       // Command to run when files change
       command: 'php artisan localizer:generate --all',
-      
+
       // Enable debug logging (optional)
       debug: false,
     }),
@@ -94,6 +94,7 @@ export default defineConfig({
 ```
 
 **What it does:**
+
 - Watches for changes in `lang/**` and `resources/lang/**`
 - Automatically runs `php artisan localizer:generate --all` when files change
 - Triggers HMR to reload your frontend with updated translations
@@ -210,7 +211,7 @@ const itemCount = 5;
     <!-- Supports :placeholder format -->
     <p>{{ __('greeting', { name: userName }) }}</p>
     <!-- "Hello :name!" → "Hello John!" -->
-    
+
     <!-- Also supports {placeholder} format -->
     <p>{{ __('items', { count: itemCount }) }}</p>
     <!-- "You have {count} items" → "You have 5 items" -->
@@ -232,12 +233,12 @@ const count = ref(5);
   <div>
     <!-- Define in your translation file: -->
     <!-- "apples": "no apples|one apple|many apples" -->
-    
+
     <p>{{ choice('apples', count) }}</p>
     <!-- count = 0: "no apples" -->
     <!-- count = 1: "one apple" -->
     <!-- count = 5: "many apples" -->
-    
+
     <!-- With replacements -->
     <p>{{ choice('apples', count, { count }) }}</p>
     <!-- "You have {count} apples" → "You have 5 apples" -->
@@ -257,13 +258,11 @@ const { __, has } = useLocalizer();
 <template>
   <div>
     <h1 v-if="has('welcome')">{{ __('welcome') }}</h1>
-    
+
     <p v-if="has('custom.message')">
       {{ __('custom.message') }}
     </p>
-    <p v-else>
-      Default message
-    </p>
+    <p v-else>Default message</p>
   </div>
 </template>
 ```
@@ -299,13 +298,9 @@ const { locale, dir, availableLocales } = useLocalizer();
   <div :dir="dir">
     <p>Current Locale: {{ locale }}</p>
     <p>Text Direction: {{ dir }}</p>
-    
+
     <select :value="locale">
-      <option 
-        v-for="(meta, code) in availableLocales" 
-        :key="code" 
-        :value="code"
-      >
+      <option v-for="(meta, code) in availableLocales" :key="code" :value="code">
         {{ meta.flag }} {{ meta.label }}
       </option>
     </select>
@@ -323,10 +318,7 @@ const { __, dir } = useLocalizer();
 </script>
 
 <template>
-  <div 
-    :dir="dir" 
-    :class="dir === 'rtl' ? 'text-right' : 'text-left'"
-  >
+  <div :dir="dir" :class="dir === 'rtl' ? 'text-right' : 'text-left'">
     <h1>{{ __('welcome') }}</h1>
     <p>{{ __('description') }}</p>
   </div>
@@ -356,17 +348,17 @@ const { translations } = useLocalizer();
 
 Returns an object with the following properties and methods:
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `__` | `(key: string, replacements?: Replacements, fallback?: string) => string` | Main translation function |
-| `trans` | `(key: string, replacements?: Replacements, fallback?: string) => string` | Alias for `__()` |
-| `lang` | `(key: string, replacements?: Replacements, fallback?: string) => string` | Alias for `__()` |
-| `has` | `(key: string) => boolean` | Check if translation key exists |
-| `choice` | `(key: string, count: number, replacements?: Replacements) => string` | Pluralization support |
-| `locale` | `ComputedRef<string>` | Reactive current locale code |
-| `dir` | `ComputedRef<'ltr' \| 'rtl'>` | Reactive text direction |
-| `availableLocales` | `ComputedRef<Record<string, LocaleMeta>>` | Reactive available locales |
-| `translations` | `ComputedRef<Record<string, string>>` | Reactive all translations |
+| Property           | Type                                                                      | Description                     |
+| ------------------ | ------------------------------------------------------------------------- | ------------------------------- |
+| `__`               | `(key: string, replacements?: Replacements, fallback?: string) => string` | Main translation function       |
+| `trans`            | `(key: string, replacements?: Replacements, fallback?: string) => string` | Alias for `__()`                |
+| `lang`             | `(key: string, replacements?: Replacements, fallback?: string) => string` | Alias for `__()`                |
+| `has`              | `(key: string) => boolean`                                                | Check if translation key exists |
+| `choice`           | `(key: string, count: number, replacements?: Replacements) => string`     | Pluralization support           |
+| `locale`           | `ComputedRef<string>`                                                     | Reactive current locale code    |
+| `dir`              | `ComputedRef<'ltr' \| 'rtl'>`                                             | Reactive text direction         |
+| `availableLocales` | `ComputedRef<Record<string, LocaleMeta>>`                                 | Reactive available locales      |
+| `translations`     | `ComputedRef<Record<string, string>>`                                     | Reactive all translations       |
 
 **Note:** Unlike React, `locale`, `dir`, `availableLocales`, and `translations` are `ComputedRef` values, making them fully reactive in Vue.
 
@@ -375,13 +367,13 @@ Returns an object with the following properties and methods:
 ```typescript
 interface LocalizerOptions {
   // Watch patterns for language file changes
-  patterns?: string[];  // default: ['lang/**', 'resources/lang/**']
-  
+  patterns?: string[]; // default: ['lang/**', 'resources/lang/**']
+
   // Command to run when files change
-  command?: string;  // default: 'php artisan localizer:generate --all'
-  
+  command?: string; // default: 'php artisan localizer:generate --all'
+
   // Enable debug logging
-  debug?: boolean;  // default: false
+  debug?: boolean; // default: false
 }
 ```
 
@@ -390,12 +382,12 @@ interface LocalizerOptions {
 The package is written in TypeScript and provides full type definitions:
 
 ```typescript
-import { 
-  useLocalizer, 
+import {
+  useLocalizer,
   UseLocalizerReturn,
   Replacements,
   LocaleData,
-  PageProps 
+  PageProps,
 } from '@devwizard/laravel-localizer-vue';
 
 // All types are available for import
@@ -436,15 +428,8 @@ const changeLocale = (newLocale: string) => {
 </script>
 
 <template>
-  <select 
-    :value="locale" 
-    @change="changeLocale($event.target.value)"
-  >
-    <option 
-      v-for="(meta, code) in availableLocales" 
-      :key="code" 
-      :value="code"
-    >
+  <select :value="locale" @change="changeLocale($event.target.value)">
+    <option v-for="(meta, code) in availableLocales" :key="code" :value="code">
       {{ meta.flag }} {{ meta.label }}
     </option>
   </select>
@@ -479,7 +464,7 @@ const submit = () => {
         {{ form.errors.email }}
       </span>
     </div>
-    
+
     <div>
       <label>{{ __('auth.password') }}</label>
       <input v-model="form.password" type="password" required />
@@ -487,7 +472,7 @@ const submit = () => {
         {{ form.errors.password }}
       </span>
     </div>
-    
+
     <button type="submit" :disabled="form.processing">
       {{ __('auth.login') }}
     </button>
@@ -650,11 +635,7 @@ const switchLocale = (newLocale: string) => {
       @change="switchLocale(($event.target as HTMLSelectElement).value)"
       class="block w-full px-3 py-2 border border-gray-300 rounded-md"
     >
-      <option
-        v-for="(meta, code) in availableLocales"
-        :key="code"
-        :value="code"
-      >
+      <option v-for="(meta, code) in availableLocales" :key="code" :value="code">
         {{ meta.flag }} {{ meta.label }}
       </option>
     </select>
@@ -663,13 +644,12 @@ const switchLocale = (newLocale: string) => {
 ```
 
 **What happens:**
+
 1. User changes locale in dropdown
 2. Page reloads with `?locale=fr` parameter
 3. Laravel middleware detects locale and updates session
 4. Vue components re-render with new translations
 5. Text direction automatically adjusts for RTL languages
-
-
 
 ## Development
 
