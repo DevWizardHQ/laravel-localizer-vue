@@ -143,6 +143,20 @@ createInertiaApp({
 });
 ```
 
+**TypeScript Declaration**
+
+To ensure type safety when accessing `window.localizer`, add this global declaration to your project:
+
+```typescript
+declare global {
+  interface Window {
+    localizer: {
+      translations: typeof translations;
+    };
+  }
+}
+```
+
 **Alternative: Create a separate file**
 
 **File: `resources/js/lang/index.ts`**
@@ -181,6 +195,7 @@ Add types to your `tsconfig.json`:
 ### Basic Usage
 
 ```vue
+{% raw %}
 <script setup lang="ts">
 import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
@@ -193,11 +208,13 @@ const { __ } = useLocalizer();
     <p>{{ __('validation.required') }}</p>
   </div>
 </template>
+{% endraw %}
 ```
 
 ### With Replacements
 
 ```vue
+{% raw %}
 <script setup lang="ts">
 import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
@@ -217,11 +234,13 @@ const itemCount = 5;
     <!-- "You have {count} items" → "You have 5 items" -->
   </div>
 </template>
+{% endraw %}
 ```
 
 ### Pluralization
 
 ```vue
+{% raw %}
 <script setup lang="ts">
 import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
@@ -244,11 +263,13 @@ const count = ref(5);
     <!-- "You have {count} apples" → "You have 5 apples" -->
   </div>
 </template>
+{% endraw %}
 ```
 
 ### Checking Translation Existence
 
 ```vue
+{% raw %}
 <script setup lang="ts">
 import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
@@ -265,11 +286,13 @@ const { __, has } = useLocalizer();
     <p v-else>Default message</p>
   </div>
 </template>
+{% endraw %}
 ```
 
 ### With Fallback
 
 ```vue
+{% raw %}
 <script setup lang="ts">
 import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
@@ -282,11 +305,13 @@ const { __ } = useLocalizer();
     <p>{{ __('might.not.exist', {}, 'Default Text') }}</p>
   </div>
 </template>
+{% endraw %}
 ```
 
 ### Locale Information (Reactive)
 
 ```vue
+{% raw %}
 <script setup lang="ts">
 import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
@@ -306,11 +331,13 @@ const { locale, dir, availableLocales } = useLocalizer();
     </select>
   </div>
 </template>
+{% endraw %}
 ```
 
 ### RTL Support
 
 ```vue
+{% raw %}
 <script setup lang="ts">
 import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
@@ -323,11 +350,13 @@ const { __, dir } = useLocalizer();
     <p>{{ __('description') }}</p>
   </div>
 </template>
+{% endraw %}
 ```
 
 ### Accessing All Translations
 
 ```vue
+{% raw %}
 <script setup lang="ts">
 import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
@@ -340,6 +369,7 @@ const { translations } = useLocalizer();
     <pre>{{ JSON.stringify(translations, null, 2) }}</pre>
   </div>
 </template>
+{% endraw %}
 ```
 
 ## API Reference
@@ -413,6 +443,7 @@ npm run test:coverage
 ### Language Switcher
 
 ```vue
+{% raw %}
 <script setup lang="ts">
 import { router } from '@inertiajs/vue3';
 import { useLocalizer } from '@devwizard/laravel-localizer-vue';
@@ -434,11 +465,13 @@ const changeLocale = (newLocale: string) => {
     </option>
   </select>
 </template>
+{% endraw %}
 ```
 
 ### Form Validation
 
 ```vue
+{% raw %}
 <script setup lang="ts">
 import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 import { useForm } from '@inertiajs/vue3';
@@ -478,11 +511,13 @@ const submit = () => {
     </button>
   </form>
 </template>
+{% endraw %}
 ```
 
 ### Composition API with Reactive Locale
 
 ```vue
+{% raw %}
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useLocalizer } from '@devwizard/laravel-localizer-vue';
@@ -506,6 +541,7 @@ const containerClass = computed(() => ({
     <p>Direction: {{ dir }}</p>
   </div>
 </template>
+{% endraw %}
 ```
 
 ## Complete Working Example
@@ -546,6 +582,7 @@ php artisan localizer:generate --all
 **Frontend: `resources/js/Pages/Dashboard.vue`**
 
 ```vue
+{% raw %}
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import { useLocalizer } from '@devwizard/laravel-localizer-vue';
@@ -612,11 +649,13 @@ const { __, choice, locale, dir } = useLocalizer();
     </div>
   </AuthenticatedLayout>
 </template>
+{% endraw %}
 ```
 
 **Language Switcher Component:**
 
 ```vue
+{% raw %}
 <script setup lang="ts">
 import { useLocalizer } from '@devwizard/laravel-localizer-vue';
 
@@ -641,6 +680,7 @@ const switchLocale = (newLocale: string) => {
     </select>
   </div>
 </template>
+{% endraw %}
 ```
 
 **What happens:**
