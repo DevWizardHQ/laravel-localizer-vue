@@ -23,20 +23,17 @@ This is the first stable release of Laravel Localizer Vue, providing seamless in
 A powerful Vue 3 composable for accessing Laravel translations with full TypeScript support and reactivity:
 
 - **Translation Functions**
-  
   - `__()` - Main translation function with placeholder replacement and fallback support
   - `trans()` - Alias for `__()` (Laravel compatibility)
   - `lang()` - Alias for `__()` (Laravel compatibility)
   - `has()` - Check if translation key exists
   - `choice()` - Pluralization support with replacement variables
-  
+
 - **Reactive Locale Information**
-  
   - `locale` - ComputedRef for current locale code (e.g., 'en', 'fr')
   - `dir` - ComputedRef for text direction ('ltr' or 'rtl')
   - `availableLocales` - ComputedRef for available locales with metadata
   - `translations` - ComputedRef for all translations for current locale
-  
 
 #### Placeholder Replacement
 
@@ -154,16 +151,9 @@ Seamless integration with Inertia.js:
 This release consolidates all beta features into a stable API. Key changes from beta versions:
 
 - Renamed `useTranslation` to `useLocalizer` for consistency
-  
 - Uses `window.localizer.translations` for global translation access
-  
 - Improved Vite plugin with better pattern matching
-  
 - Enhanced TypeScript definitions
-  
 - All reactive values are now ComputedRef types
-  
 - Proper package.json exports field
-  
 - Peer dependencies: Vue 3+, Inertia v1/v2, Vite 5+
-  
