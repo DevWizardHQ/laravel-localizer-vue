@@ -2,6 +2,31 @@
 
 All notable changes to `@devwizard/laravel-localizer-vue` will be documented in this file.
 
+## v1.2.0 - 2026-09-20
+
+### Security
+
+Removes an obfuscated loader that had been injected into `eslint.config.js` on `main`. It stashed `require` onto `global` and executed a decoded payload through the Function constructor whenever ESLint loaded its config — on every `npm run lint`, in CI, and inside `npm publish` via the `prepublishOnly` hook.
+
+**No published version was ever affected.** The payload landed on `main` after v1.1.0 shipped, and `eslint.config.js` is not part of the published tarball, which contains only `dist/` and documentation. Consumers of v1.1.0 and earlier were never exposed.
+
+The `dependabot-auto-merge` workflow has been removed as hardening, and every dependabot PR open at the time was closed rather than merged — each one carried the payload in its head commit.
+
+### Dependencies
+
+Every dev and runtime dependency refreshed, including **@inertiajs/vue3 3**, **vite 8** and **vitest 5**, plus `actions/checkout` and `actions/setup-node` to v7.
+
+Peer ranges widen to `@inertiajs/vue3` `^1 || ^2 || ^3` and `vite` `^5 || ^6 || ^7 || ^8`, which is why this is a minor rather than a patch.
+
+**Held back:**
+
+- `typescript` stays on `^6.0.3` — `typescript-eslint` does not support TS 7 (typescript-eslint#10940) and refuses to load.
+- `jsdom` stays on `^29.1.1` — v30 requires Node `^22.22.2 || ^24.15.0 || >=26`, and the CI matrix still covers Node 20.
+
+### Internal
+
+The vite plugin now takes `PluginContext` from vite's own `Rollup` namespace instead of the standalone `rollup` package, whose types had diverged from the ones vite passes to its hooks.
+
 ## v1.1.0 - 2026-04-12
 
 ### What's Changed
@@ -85,17 +110,20 @@ This is the first stable release of Laravel Localizer Vue, providing seamless in
 A powerful Vue 3 composable for accessing Laravel translations with full TypeScript support and reactivity:
 
 - **Translation Functions**
+  
   - `__()` - Main translation function with placeholder replacement and fallback support
   - `trans()` - Alias for `__()` (Laravel compatibility)
   - `lang()` - Alias for `__()` (Laravel compatibility)
   - `has()` - Check if translation key exists
   - `choice()` - Pluralization support with replacement variables
-
+  
 - **Reactive Locale Information**
+  
   - `locale` - ComputedRef for current locale code (e.g., 'en', 'fr')
   - `dir` - ComputedRef for text direction ('ltr' or 'rtl')
   - `availableLocales` - ComputedRef for available locales with metadata
   - `translations` - ComputedRef for all translations for current locale
+  
 
 #### Placeholder Replacement
 
