@@ -2,6 +2,21 @@
 
 All notable changes to `@devwizard/laravel-localizer-vue` will be documented in this file.
 
+## v1.2.1 - 2026-10-30
+
+Maintenance release. No changes to the published code.
+
+### Dependencies
+
+- Dev dependencies updated: vite 8.3.1, prettier 3.9.9, eslint-plugin-vue 10.11.1, jsdom 30.1.1.
+
+### Maintenance
+
+- CI tests on Node 22, 24 and 26. Node 20 reached end of life in April 2026.
+- Removed the supply-chain scan workflow and the repository git hooks. Force pushes are blocked by a branch ruleset and secret scanning with push protection is on.
+
+**Full Changelog**: https://github.com/DevWizardHQ/laravel-localizer-vue/compare/v1.2.0...v1.2.1
+
 ## v1.2.0 - 2026-09-20
 
 ### Security
